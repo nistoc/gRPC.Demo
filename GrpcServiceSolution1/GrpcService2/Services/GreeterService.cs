@@ -31,6 +31,7 @@ namespace GrpcService2
                 {
                     Message = $"Hello {request.Name} {i}"
                 });
+                await Task.Delay(1500);
             }
 
             await responseStream.WriteAsync(new HelloReply
