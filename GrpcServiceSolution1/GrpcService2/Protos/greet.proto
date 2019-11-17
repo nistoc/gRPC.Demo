@@ -8,6 +8,8 @@ package Greet;
 service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc SayHelloStreamig (HelloRequest) returns (stream HelloReply);
+  rpc SayHelloBidirectStreamig (stream HelloRequest) returns (stream HelloReply);
 }
 
 // The request message containing the user's name.

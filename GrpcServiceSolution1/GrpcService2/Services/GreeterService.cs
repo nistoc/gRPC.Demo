@@ -22,5 +22,31 @@ namespace GrpcService2
                 Message = "Hello " + request.Name
             });
         }
+
+        public override async Task SayHelloStreamig(HelloRequest request, IServerStreamWriter<HelloReply> responseStream, ServerCallContext context)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                await responseStream.WriteAsync(new HelloReply
+                {
+                    Message = $"Hello {request.Name} {i}"
+                });
+            }
+
+            await responseStream.WriteAsync(new HelloReply
+            {
+                Message = $"{request.Name}, you should go to server console. Alt+Tab?"
+            });
+
+            for (int i = 3; i > 0; i--)
+            {
+                Console.WriteLine($"Please response to Client (more {i} lines(s)): ");
+                var text = Console.ReadLine();
+                await responseStream.WriteAsync(new HelloReply
+                {
+                    Message = $"Server response is: {text}"
+                });
+            }
+        }
     }
 }
